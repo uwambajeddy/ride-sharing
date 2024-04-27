@@ -6,7 +6,7 @@ import { GoogleMap, Marker, DirectionsService, DirectionsRenderer, useLoadScript
 
 import { Button } from "../ui/button";
 
-import { Key, SetStateAction, Key, useEffect, useState } from "react";
+import { Key, SetStateAction, useEffect, useState } from "react";
 import {  tripAction } from "@/lib/actions/trip.actions";
 import { TripCancellation } from "./TripCancellation";
 import Image from "next/image";
