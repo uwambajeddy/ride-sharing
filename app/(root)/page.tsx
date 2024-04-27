@@ -1,20 +1,30 @@
 import { Collection } from "@/components/shared/Collection"
 import { navLinks } from "@/constants"
-import { getAllImages } from "@/lib/actions/image.actions"
+import { getAllTrips } from "@/lib/actions/trip.actions"
+import { getUserById } from "@/lib/actions/user.actions"
+import { socket } from "@/lib/utils"
+import { auth } from "@clerk/nextjs"
 import Image from "next/image"
 import Link from "next/link"
 
-const Home = async ({ searchParams }: SearchParamProps) => {
-  const page = Number(searchParams?.page) || 1;
-  const searchQuery = (searchParams?.query as string) || '';
+const Trips = async () => {
+  const { userId } = auth();
+  let user;
 
-  const images = await getAllImages({ page, searchQuery})
+  if (userId) {
+    user = await getUserById(userId);
+  } else {
+    socket.disconnect();
+  }
+
+  const trips = await getAllTrips({userId: user?._id })
+  
 
   return (
     <>
       <section className="home">
         <h1 className="home-heading">
-          Unleash Your Creative Vision with Imaginify
+        Navigate Life Ride With Purpose
         </h1>
         <ul className="flex-center w-full gap-20">
           {navLinks.slice(1, 5).map((link) => (
@@ -34,14 +44,13 @@ const Home = async ({ searchParams }: SearchParamProps) => {
 
       <section className="sm:mt-12">
         <Collection 
-          hasSearch={true}
-          images={images?.data}
-          totalPages={images?.totalPage}
-          page={page}
+          hasTitle={true}
+          userId={user?._id}
+          trips={trips?.data}
         />
       </section>
     </>
   )
 }
 
-export default Home
+export default Trips

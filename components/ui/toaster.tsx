@@ -9,9 +9,75 @@ import {
   ToastViewport,
 } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
+import { socket } from "@/lib/utils";
+import { useEffect } from "react";
 
-export function Toaster() {
-  const { toasts } = useToast()
+export function Toaster({user}: any) {
+  const { toasts } = useToast();
+  const { toast } = useToast();
+  
+
+  useEffect(() => {
+    if (user) {
+    
+      socket.emit("sendUserDetails", { user })
+    }
+
+  }, []);
+
+  socket.on("tripStatus", ({ trip, status }) => {
+    if (status === 'active') {
+      toast({
+        title: `Driver on the way to pick you up`,
+        description: `${trip.driverInfo[0].username} started the trip`,
+        duration: 5000,
+        className: 'success-toast' 
+      })
+    }
+    if (status === 'completed') {
+      toast({
+        title: `Trip completed!!`,
+        description: `${trip.driverInfo[0].username} marked the trip as completed`,
+        duration: 5000,
+        className: 'success-toast' 
+      })
+      
+    }
+
+  })
+  socket.on("requestStatus", ({  status }) => {
+
+    if (status === 'approved') {
+      toast({
+        title: `Trip request has been approved`,
+        description: ` Your trip request has been approved by the driver`,
+        duration: 5000,
+        className: 'success-toast' 
+      })
+      
+    }
+    if (status === 'cancelled') {
+      toast({
+        title: 'Trip request has been rejected',
+        description:  ` Your trip request has been rejected by the driver`,
+        duration: 5000,
+        className: 'error-toast' 
+      })
+      
+    }
+
+  })
+  socket.on("passengerRequest", () => {
+
+      toast({
+        title: `Passenger request`,
+        description: ` Incoming passenger request...`,
+        duration: 5000,
+        className: 'success-toast' 
+      })
+      
+
+  })
 
   return (
     <ToastProvider>
