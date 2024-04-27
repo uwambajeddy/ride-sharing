@@ -77,7 +77,6 @@ const Card: React.FC<any> = ({trip,userId}) => {
   const handleLocationSelect = async (coordinates: [Coordinates]) => {
     await requestTrip({ tripId: trip._id, passengerId: userId, pickupPoint: `${coordinates[0].latitude}, ${coordinates[0].longitude}`, path: `/trips/requests` })
     setIsMapModalOpen(false); 
-    console.log("passengerRequest", { driverId: trip.driverInfo[0]._id })
     socket.emit("passengerRequest", { driverId: trip.driverInfo[0]._id }); 
     router.push(`/trips/requests`);
 

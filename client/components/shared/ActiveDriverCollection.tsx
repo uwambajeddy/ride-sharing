@@ -14,7 +14,6 @@ export const ActiveDriverCollection = () => {
     })
 
     socket.on("tripCoordinates", ({ trip, coordinates }) => {
-      console.log("tripCoordinates", trip, coordinates)
       setDriverLocation(coordinates)
       setTrips([trip])
     })
