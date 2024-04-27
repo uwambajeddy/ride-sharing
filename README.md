@@ -38,7 +38,6 @@ List of frameworks/libraries and languages used to bootstrap this project:
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app._
 
 1. Clone the repo
    ```sh
