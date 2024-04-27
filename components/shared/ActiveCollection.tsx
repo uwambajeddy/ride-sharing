@@ -42,7 +42,7 @@ export const ActiveCollection = ({
 const Card: React.FC<any> = ({ trip, userId, isLoaded }) => {
   const [startAddress, setStartAddress] = useState('');
   const [endAddress, setEndAddress] = useState('');
-  const [driverLocation, setDriverLocation] = useState(null);
+  const [driverLocation, setDriverLocation] =  useState<{ lat: number; lng: number } | null>(null);
   const router = useRouter();
   const [directions, setDirections] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
