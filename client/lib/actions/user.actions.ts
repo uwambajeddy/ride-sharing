@@ -21,13 +21,13 @@ export async function createUser(user: CreateUserParams) {
 }
 
 // READ
-export async function getUserById(userId: string) {
+export async function getUserById(userId: string, res:any) {
   try {
     await connectToDatabase();
 
     const user = await User.findOne({ clerkId: userId });
 
-    if (!user) throw new Error("User not found");
+    if (!user) return revalidatePath("/");
 
     return JSON.parse(JSON.stringify(user));
   } catch (error) {
