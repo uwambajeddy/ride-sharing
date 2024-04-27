@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <a href="https://ride-sharing-virid.vercel.app">
-    <img src="https://github.com/uwambajeddy/ride-sharing/assets/59047760/ef4f44fc-fece-427a-8a94-235b8603f4aa" alt="Logo" width="80" height="80">
+    <img src="https://github.com/uwambajeddy/ride-sharing/assets/59047760/ef4f44fc-fece-427a-8a94-235b8603f4aa" alt="Logo" >
   </a>
 
   <h3 align="center">Ride-Sharing Web App</h3>
@@ -122,7 +122,7 @@ This project is licensed under the [MIT License](LICENSE).
 [Mongo-db]: https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white
 [Express]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge
 [Typescript]: https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white
-[Node]: [https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+[Node]: https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white
 
 
 
