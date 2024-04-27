@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <a href="https://ride-sharing-virid.vercel.app">
-    <img src="[images/logo.png](https://github.com/uwambajeddy/ride-sharing/assets/59047760/ef4f44fc-fece-427a-8a94-235b8603f4aa)" alt="Logo" width="80" height="80">
+    <img src="https://github.com/uwambajeddy/ride-sharing/assets/59047760/ef4f44fc-fece-427a-8a94-235b8603f4aa" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Ride-Sharing Web App</h3>
@@ -18,8 +18,6 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-[![Ride share Screen Shot][product-screenshot]]([https://example.com](https://ride-sharing-virid.vercel.app))
 ![Opera Snapshot_2024-04-27_034729_localhost](https://github.com/uwambajeddy/ride-sharing/assets/59047760/75522c08-3fb6-4598-a527-3597e965eff4)
 
 
@@ -31,12 +29,10 @@ List of frameworks/libraries and languages used to bootstrap this project:
 
 * [![Next][Next.js]][Next-url]
 * [![React][React.js]][React-url]
-* [![Google][Google-maps]][Google-maps]
-* [![Socket][Socket-io]][Socket-io]
-* [![Socket][Socket-io]][Mongo-db]
-* [![Node][Socket-io]][Node]
-* [![Typescript][Socket-io]][Typescript]
-* [![Express][Socket-io]][Express]
+* [![Mongo-db][Mongo-db]][Mongo-db]
+* [![Node][Node]][Node]
+* [![Typescript][Typescript]][Typescript]
+* [![Express][Express]][Express]
 
 
 
