@@ -42,10 +42,10 @@ const Card: React.FC<any> = ({ trip, userId, isLoaded }) => {
   const [endAddress, setEndAddress] = useState('');
   const [driverLocation, setDriverLocation] =  useState<{ lat: number; lng: number } | null>(null);
   const router = useRouter();
-  const [directions, setDirections] = useState(null);
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [duration, setDuration] = useState(null);
-  const [distance, setDistance] = useState(null);
+  const [selectedUser, setSelectedUser] = useState<any>(null);
+  const [duration, setDuration] = useState<string | null>(null);
+  const [distance, setDistance] = useState<string | null>(null);
+  const [directions, setDirections] = useState<any>(null);
 
 
   useEffect(() => {
@@ -68,21 +68,25 @@ const Card: React.FC<any> = ({ trip, userId, isLoaded }) => {
   }, []);
 
   useEffect(() => {
-    const fetchAddress = async () => {
-      // Fetch start address
-      const startResponse = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${driverLocation.lat},${driverLocation.lng}&key=${process.env.NEXT_PUBLIC_MAPS_API_KEY}`);
-      const startData = await startResponse.json();
-      
-      const startAddress = startData.results[0].formatted_address;
-      setStartAddress(startAddress);
+        const fetchAddress = async () => {
+          if (!driverLocation) {
+            return;
+          }
+          
+          // Fetch start address
+          const startResponse = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${driverLocation.lat},${driverLocation.lng}&key=${process.env.NEXT_PUBLIC_MAPS_API_KEY}`);
+          const startData = await startResponse.json();
+          
+          const startAddress = startData.results[0].formatted_address;
+          setStartAddress(startAddress);
 
-      // Fetch end address
-      const endResponse = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${trip.endPoint.split(", ")[0]},${trip.endPoint.split(", ")[1]}&key=${process.env.NEXT_PUBLIC_MAPS_API_KEY}`);
-      const endData = await endResponse.json();
-      const endAddress = endData.results[0].formatted_address;
-      setEndAddress(endAddress);
-    };
-if(driverLocation) fetchAddress();
+          // Fetch end address
+          const endResponse = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${trip.endPoint.split(", ")[0]},${trip.endPoint.split(", ")[1]}&key=${process.env.NEXT_PUBLIC_MAPS_API_KEY}`);
+          const endData = await endResponse.json();
+          const endAddress = endData.results[0].formatted_address;
+          setEndAddress(endAddress);
+        };
+    if(driverLocation) fetchAddress();
   }, [trip.startPoint, trip.endPoint, driverLocation]);
 
 
@@ -144,19 +148,28 @@ if(driverLocation) fetchAddress();
             />
 
           {/* Markers for pickup points */}
-          {trip.tripPassengers.filter((req: { status: string; })=> req.status == "approved").map((request: SetStateAction<null>, index: Key | null | undefined) => 
-            <Marker key={index} position={{lat:Number(`${request.pickupPoint.split(", ")[0]}`),lng:Number(`${request.pickupPoint.split(", ")[1]}`)}}  icon={{
-              url: "https://res.cloudinary.com/dvibmdi1y/image/upload/v1714109675/passenger_r2iqwe.png",
-              scaledSize: new window.google.maps.Size(40, 40)
-              
-            }}
-            onClick={() => setSelectedUser(request)}
-            
-            />
-            )}
+          {trip.tripPassengers
+            .filter((req: { status: string; }) => req.status === "approved")
+            .map((request: SetStateAction<null> | null, index: Key | null | undefined) => {
+              if (!request) return null;
+              return (
+                <Marker
+                  key={index}
+                  position={{
+                    lat: Number(`${(request as unknown as { pickupPoint: string }).pickupPoint.split(", ")[0]}`),
+                    lng: Number(`${(request as unknown as { pickupPoint: string }).pickupPoint.split(", ")[1]}`),
+                  }}
+                  icon={{
+                    url: "https://res.cloudinary.com/dvibmdi1y/image/upload/v1714109675/passenger_r2iqwe.png",
+                    scaledSize: new window.google.maps.Size(40, 40),
+                  }}
+                  onClick={() => setSelectedUser(request)}
+                />
+              );
+            })}
             
             {selectedUser && (
-        <InfoWindow
+      <InfoWindow
           position={{ lat: Number(`${selectedUser.pickupPoint.split(", ")[0]}`), lng: Number(`${selectedUser.pickupPoint.split(", ")[1]}`) }}
           onCloseClick={() => setSelectedUser(null)}
         >
@@ -165,7 +178,7 @@ if(driverLocation) fetchAddress();
             <h2 style={{marginTop:5}}>{selectedUser.passengerId.firstName} {selectedUser.passengerId.lastName}</h2>
             <h2 style={{marginTop:5}}>{selectedUser.passengerId.email}</h2>
   
-          </div> 
+          </div>
         </InfoWindow>
       )}
 
@@ -178,29 +191,38 @@ if(driverLocation) fetchAddress();
               travelMode: google.maps.TravelMode.DRIVING,
               provideRouteAlternatives: true,
             }}
-              callback={response => {
-                if (response !== null) {
-                  if (!directions) {
+            callback={response => {
+              if (response !== null) {
+                if (!directions) {
                     const route = response.routes[0];
-                    const distance = route.legs.reduce((acc, leg) => acc + leg.distance.value, 0); // Total distance in meters
-                    const duration = route.legs.reduce((acc, leg) => acc + leg.duration.value, 0); // Total duration in seconds
-                    
-                    // Convert distance from meters to kilometers
+                    const distance = route.legs.reduce((acc, leg) => {
+                        if (leg.distance) {
+                            return acc + leg.distance.value;
+                        }
+                        return acc;
+                    }, 0);
+            
+                    const duration = route.legs.reduce((acc, leg) => {
+                        if (leg.duration) {
+                            return acc + leg.duration.value;
+                        }
+                        return acc;
+                    }, 0);
+            
                     const distanceInKm = distance / 1000;
-                
-                    // Calculate hours and minutes for duration
+            
                     const hours = Math.floor(duration / 3600);
                     const minutes = Math.floor((duration % 3600) / 60);
-                
-                    // Format duration string
-                    const durationString = `${hours > 0?`${hours} hour${hours !== 1 ? 's' : ''},`:""} ${minutes} minute${minutes !== 1 ? 's' : ''}`;
-
-                    setDistance(distanceInKm.toFixed(2))
-                    setDuration(durationString)
-                    setDirections(response)
-                  }
-              }
-            }}
+            
+                    const durationString = `${hours > 0 ? `${hours} hour${hours !== 1 ? 's' : ''},` : ''} ${minutes} minute${minutes !== 1 ? 's' : ''}`;
+            
+                    setDistance(distanceInKm.toFixed(2));
+                    setDuration(durationString);
+                    setDirections(response);
+                }
+            }
+            
+          }}
             />
            { directions && <DirectionsRenderer directions={directions} />}
         </GoogleMap>

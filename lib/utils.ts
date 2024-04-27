@@ -5,17 +5,17 @@ import { twMerge } from "tailwind-merge";
 
 import io from "socket.io-client";
 
- let socket = io(process.env.NEXT_PUBLIC_SERVER_URL);
+let socket = io(process.env.NEXT_PUBLIC_SERVER_URL as string);
 
-    socket.on("connect", () => {
-      console.log("Connected to the Socket.IO server! ✅");
-    });
-    socket.on("connect_error", (error) => {
-      console.error("Connection to the Socket.IO server failed:⚠️", error);
-    });
-    socket.on("disconnect", () => {
-      console.log("Disconnected from the Socket.IO server! ❌"); 
-    });
+socket.on("connect", () => {
+  console.log("Connected to the Socket.IO server! ✅");
+});
+socket.on("connect_error", (error) => {
+  console.error("Connection to the Socket.IO server failed:⚠️", error);
+});
+socket.on("disconnect", () => {
+  console.log("Disconnected from the Socket.IO server! ❌"); 
+});
   
 
 export { socket };

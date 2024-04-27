@@ -1,23 +1,23 @@
 "use client";
 import { GoogleMap, Marker, DirectionsService, DirectionsRenderer, useLoadScript, InfoWindow } from '@react-google-maps/api';
 
-import { useEffect, useState } from "react";
+import { Key, useEffect, useState } from "react";
 import Image from "next/image";
 import { socket } from "@/lib/utils";
 
 export const ActiveDriverCollection = () => {
   
-    const [driverLocation, setDriverLocation] = useState(null);
-    const [trips, setTrips] = useState([]);
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY ?? ''
-  })
+      const [driverLocation, setDriverLocation] = useState(null);
+      const [trips, setTrips] = useState<any[]>([]); // Update the type of 'trips' to 'any[]'
+    const { isLoaded } = useLoadScript({
+      googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY ?? ''
+    })
 
-  socket.on("tripCoordinates", ({ trip, coordinates }) => {
-    console.log("tripCoordinates", trip, coordinates)
-    setDriverLocation(coordinates)
-    setTrips([trip])
-  })
+    socket.on("tripCoordinates", ({ trip, coordinates }) => {
+      console.log("tripCoordinates", trip, coordinates)
+      setDriverLocation(coordinates)
+      setTrips([trip])
+    })
 
   return (
     <>
@@ -34,13 +34,13 @@ export const ActiveDriverCollection = () => {
 
 
 
-const Card: React.FC<TripCardProps> = ({ trip, isLoaded, driverLocation }) => {
+const Card: React.FC<any> = ({ trip, isLoaded, driverLocation }) => {
   const [startAddress, setStartAddress] = useState('');
   const [endAddress, setEndAddress] = useState('');
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [duration, setDuration] = useState(null);
-  const [distance, setDistance] = useState(null);
-  const [directions, setDirections] = useState(null);
+  const [selectedUser, setSelectedUser] = useState<any>(null);
+  const [duration, setDuration] = useState<string | null>(null);
+  const [distance, setDistance] = useState<string | null>(null);
+  const [directions, setDirections] = useState<any>(null);
 
 
   useEffect(() => {
@@ -121,16 +121,16 @@ if(driverLocation) fetchAddress();
             />
 
           {/* Markers for pickup points */}
-          {trip.tripPassengers.map((request, index) => 
-            <Marker key={index} position={{lat:Number(`${request.pickupPoint.split(", ")[0]}`),lng:Number(`${request.pickupPoint.split(", ")[1]}`)}}  icon={{
-              url: "https://res.cloudinary.com/dvibmdi1y/image/upload/v1714109675/passenger_r2iqwe.png",
-              scaledSize: new window.google.maps.Size(40, 40)
-              
-            }}
-            onClick={() => setSelectedUser(request)}
-            
-            />
-            )}
+          {trip.tripPassengers.map((request: { pickupPoint: string; }, index: number) => 
+            request && (
+              <Marker key={index} position={{lat:Number(`${request.pickupPoint.split(", ")[0]}`),lng:Number(`${request.pickupPoint.split(", ")[1]}`)}}  icon={{
+                url: "https://res.cloudinary.com/dvibmdi1y/image/upload/v1714109675/passenger_r2iqwe.png",
+                scaledSize: new window.google.maps.Size(40, 40)
+              }}
+              onClick={() => setSelectedUser(request)}
+              />
+            )
+          )}
             
             {selectedUser && (
         <InfoWindow
@@ -151,32 +151,41 @@ if(driverLocation) fetchAddress();
             options={{
               destination:`${trip.endPoint.split(", ")[0]},${trip.endPoint.split(", ")[1]}`,
               origin:  driverLocation,
-              waypoints: trip.tripPassengers.map(request => ({ location: {lat:Number(`${request.pickupPoint.split(", ")[0]}`),lng:Number(`${request.pickupPoint.split(", ")[1]}`)} })),
+              waypoints: trip.tripPassengers.map((request: { pickupPoint: string; }) => ({ location: {lat:Number(`${request.pickupPoint.split(", ")[0]}`),lng:Number(`${request.pickupPoint.split(", ")[1]}`)} })),
               travelMode: google.maps.TravelMode.DRIVING,
               provideRouteAlternatives: true,
             }}
               callback={response => {
                 if (response !== null) {
                   if (!directions) {
-                    const route = response.routes[0];
-                    const distance = route.legs.reduce((acc, leg) => acc + leg.distance.value, 0); // Total distance in meters
-                    const duration = route.legs.reduce((acc, leg) => acc + leg.duration.value, 0); // Total duration in seconds
-                    
-                    // Convert distance from meters to kilometers
-                    const distanceInKm = distance / 1000;
-                
-                    // Calculate hours and minutes for duration
-                    const hours = Math.floor(duration / 3600);
-                    const minutes = Math.floor((duration % 3600) / 60);
-                
-                    // Format duration string
-                    const durationString = `${hours > 0?`${hours} hour${hours !== 1 ? 's' : ''},`:""} ${minutes} minute${minutes !== 1 ? 's' : ''}`;
-
-                    setDistance(distanceInKm.toFixed(2))
-                    setDuration(durationString)
-                    setDirections(response)
+                      const route = response.routes[0];
+                      const distance = route.legs.reduce((acc, leg) => {
+                          if (leg.distance) {
+                              return acc + leg.distance.value;
+                          }
+                          return acc;
+                      }, 0);
+              
+                      const duration = route.legs.reduce((acc, leg) => {
+                          if (leg.duration) {
+                              return acc + leg.duration.value;
+                          }
+                          return acc;
+                      }, 0);
+              
+                      const distanceInKm = distance / 1000;
+              
+                      const hours = Math.floor(duration / 3600);
+                      const minutes = Math.floor((duration % 3600) / 60);
+              
+                      const durationString = `${hours > 0 ? `${hours} hour${hours !== 1 ? 's' : ''},` : ''} ${minutes} minute${minutes !== 1 ? 's' : ''}`;
+              
+                      setDistance(distanceInKm.toFixed(2));
+                      setDuration(durationString);
+                      setDirections(response);
                   }
               }
+              
             }}
             />
            { directions && <DirectionsRenderer directions={directions} />}
@@ -219,11 +228,11 @@ if(driverLocation) fetchAddress();
       <div className="text-gray-600">{endAddress}</div>
     </div>
 
-    {trip.tripPassengers.filter(req=> req.status == "approved").length > 0 && <div className="mb-4">
+    {trip.tripPassengers.filter((req: { status: string; })=> req.status == "approved").length > 0 && <div className="mb-4">
           <div className="text-sm font-semibold mb-1">Booked:</div>
           <div className="flex">
 
-          {trip.tripPassengers.filter(req=> req.status == "approved").map(request => {
+          {trip.tripPassengers.filter((req: { status: string; })=> req.status == "approved").map((request: { passengerId: { photo: string | undefined; }; _id: Key | null | undefined; }) => {
               return (
                 <img
                   src={

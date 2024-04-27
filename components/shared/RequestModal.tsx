@@ -4,7 +4,7 @@ import GoogleMaps from "./GoogleMaps";
 
 interface GoogleMapModalProps {
   onClose: () => void;
-  onSelectLocation: (latitude: number, longitude: number) => void;
+  onSelectLocation: any;
 }
 
 export const RequestModal = ({ onClose, onSelectLocation }: GoogleMapModalProps) => {
@@ -25,7 +25,7 @@ export const RequestModal = ({ onClose, onSelectLocation }: GoogleMapModalProps)
           <div className="flex-between">
             <p className="p-16-semibold text-dark-400">Mark Pickup Location</p>
           </div>
-          <GoogleMaps onSelectLocation={(lat, lng) => setSelectedLocation({ latitude: lat, longitude: lng })} />
+          <GoogleMaps onSelectLocation={(lat: number, lng: number) => setSelectedLocation({ latitude: lat, longitude: lng })} />
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel

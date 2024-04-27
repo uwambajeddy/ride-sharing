@@ -4,16 +4,13 @@ import { Toaster } from '@/components/ui/toaster'
 import { getUserById } from '@/lib/actions/user.actions';
 import { auth } from '@clerk/nextjs';
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = async ({ children }: { children: React.ReactNode }) => {
 
   const { userId } = auth();
 
   let user;
   if (userId) {
-    setTimeout(async() => {
-      user = await getUserById(userId);
-      
-    },5000)
+       user = await getUserById(userId);
       }
 
   

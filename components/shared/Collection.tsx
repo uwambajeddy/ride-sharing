@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { TripDocument } from "@/lib/database/models/trip.model";
 import { Button } from "../ui/button";
-import { useEffect, useState } from "react";
+import { Key, useEffect, useState } from "react";
 import { RequestModal } from "./RequestModal";
 import { requestTrip, tripAction } from "@/lib/actions/trip.actions";
 import { TripCancellation } from "./TripCancellation";
@@ -48,7 +48,7 @@ type Coordinates = {
 };
 
 
-const Card: React.FC<TripCardProps> = ({trip,userId}) => {
+const Card: React.FC<any> = ({trip,userId}) => {
   const [startAddress, setStartAddress] = useState('');
   const [endAddress, setEndAddress] = useState('');
   const [isMapModalOpen, setIsMapModalOpen] = useState(false);
@@ -130,7 +130,7 @@ const Card: React.FC<TripCardProps> = ({trip,userId}) => {
             {trip.driverId == userId ? <>
           { trip.status != "completed" && <Button
                 className="collection-btn mr-2"
-                onClick={async () => { await tripAction({ tripId: trip._id, action: "active", path: "/trips/active" }); socket.emit("tripStatus", { trip, passengers: trip.tripPassengers.filter(req=> req.status == "approved"), status:"active"});  router.push("/trips/active")}}
+                onClick={async () => { await tripAction({ tripId: trip._id, action: "active", path: "/trips/active" }); socket.emit("tripStatus", { trip, passengers: trip.tripPassengers.filter((req: { status: string; })=> req.status == "approved"), status:"active"});  router.push("/trips/active")}}
               >
              Start
               </Button>}
@@ -161,11 +161,11 @@ const Card: React.FC<TripCardProps> = ({trip,userId}) => {
       <div className="text-gray-600">{endAddress}</div>
     </div>
 
-    {trip.tripPassengers.filter(req=> req.status == "approved").length > 0 && <div className="mb-4">
+    {trip.tripPassengers.filter((req: { status: string; })=> req.status == "approved").length > 0 && <div className="mb-4">
           <div className="text-sm font-semibold mb-1">Booked:</div>
           <div className="flex">
 
-          {trip.tripPassengers.filter(req=> req.status == "approved").map(request => {
+          {trip.tripPassengers.filter((req: { status: string; })=> req.status == "approved").map((request: { passengerId: { photo: string | undefined; }; _id: Key | null | undefined; }) => {
               return (
                 <img
                   src={
@@ -184,12 +184,12 @@ const Card: React.FC<TripCardProps> = ({trip,userId}) => {
           <div className="text-sm font-semibold mb-1">Requests:</div>
           <div className="flex">
 
-          {trip.tripPassengers.filter(req=> req.status == "pending").length > 0 ? trip.tripPassengers.filter(req=> req.status == "pending").map(request => {
+          {trip.tripPassengers.filter((req: { status: string; })=> req.status == "pending").length > 0 ? trip.tripPassengers.filter((req: { status: string; })=> req.status == "pending").map((request: { _id: Key | null | undefined; passengerId: { _id: any; photo: string | undefined; }; pickupPoint: { split: (arg0: string) => number[]; }; }) => {
               return (<>
                 {isRequestMapModalOpen && (
                   <RequestConfirmationModal
                     onClose={() => setIsRequestMapModalOpen(false)}
-                    requestId={request._id}
+                    requestId={String(request._id)}
                     passenger={request.passengerId}
                     lat={ request.pickupPoint.split(", ")[0]}
                     lng={ request.pickupPoint.split(", ")[1]}

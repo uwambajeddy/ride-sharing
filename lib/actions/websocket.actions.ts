@@ -17,6 +17,8 @@ io.on('connection', (socket) => {
   socket.on("sendUserDetails", ({ user }) => {
    console.log(`User ${user._id} connected.`);
     connectedUsers[user._id] = { ...user, socketId: socket.id };
+
+    io.to(socket.id).emit("userConnected");
     
    })
  

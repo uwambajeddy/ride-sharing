@@ -52,7 +52,7 @@ export async function requestTrip({
 }
 
 // UPDATE TRIP
-export async function tripRequestAction({ requestId, action, path }) {
+export async function tripRequestAction({ requestId, action, path }: { requestId: string, action: string, path: string }) {
   try {
     await connectToDatabase();
 
@@ -70,36 +70,13 @@ export async function tripRequestAction({ requestId, action, path }) {
   }
 }
 
-export async function tripAction({ tripId, action, path }) {
+export async function tripAction({ tripId, action, path }: { tripId: string, action: string, path: string }) {
   try {
     await connectToDatabase();
 
     const updatedTrip = await Trip.findByIdAndUpdate(
       tripId,
       { status:action },
-      { new: true }
-    )
-
-    revalidatePath(path);
-
-    return JSON.parse(JSON.stringify(updatedTrip));
-  } catch (error) {
-    handleError(error)
-  }
-}
-export async function updateTrip({ tripId,userId, startPoint, endPoint, path }: UpdateTripParams) {
-  try {
-    await connectToDatabase();
-
-    const tripToUpdate = await Trip.findById(tripId);
-
-    if (!tripToUpdate || tripToUpdate.driverId.toHexString() !== userId) {
-      throw new Error("Unauthorized or trip not found");
-    }
-
-    const updatedTrip = await Trip.findByIdAndUpdate(
-      tripToUpdate._id,
-      { startPoint, endPoint },
       { new: true }
     )
 
@@ -132,7 +109,7 @@ export async function getTripById(id: string) {
     const trip = await Trip.aggregate([
       {
         $match: {
-          $where: {_id:id}
+          _id: id
         }
       },
       {
@@ -204,7 +181,7 @@ export async function getAllTrips({userId }: {
 
     if (userId) {
       filteredTrips = tripsWithPassengers.filter(trip =>
-        !trip.tripPassengers.some(passenger => passenger.passengerId.toString() != userId)
+        !trip.tripPassengers.some((passenger: { passengerId: { toString: () => string; }; }) => passenger.passengerId.toString() != userId)
       );
       
     }
@@ -288,7 +265,7 @@ export async function getMyTrips(userId: string) {
     }));
 
     const filteredTrips = tripsWithPassengers.filter(trip =>
-      !trip.tripPassengers.some(passenger => passenger.passengerId.toString() == userId)
+      !trip.tripPassengers.some((passenger: { passengerId: { toString: () => string; }; }) => passenger.passengerId.toString() == userId)
     );
 
   
@@ -327,7 +304,7 @@ export async function getActiveTrips(userId: string) {
     }));
 
     const filteredTrips = tripsWithPassengers.filter(trip =>
-      !trip.tripPassengers.some(passenger => passenger.passengerId.toString() == userId)
+      !trip.tripPassengers.some((passenger: { passengerId: { toString: () => string; }; }) => passenger.passengerId.toString() == userId)
     );
 
   

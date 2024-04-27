@@ -6,12 +6,8 @@ import RequestGoogleMaps from "./RequestGoogleMaps";
 import { useRouter } from "next/navigation";
 import { socket } from "@/lib/utils";
 
-interface GoogleMapModalProps {
-  onClose: () => void;
-  onSelectLocation: (latitude: number, longitude: number) => void;
-}
 
-export const RequestConfirmationModal = ({ onClose, lat, lng, passenger, requestId  }: GoogleMapModalProps) => {
+export const RequestConfirmationModal = ({ onClose, lat, lng, passenger, requestId }: {  onClose: () => void, lat: number, lng: number, passenger: any, requestId: string }) => {
 const router = useRouter();
 
   return (
@@ -28,7 +24,7 @@ const router = useRouter();
                   alt="Passenger Profile"
                   className="h-10 w-10 rounded-full mr-2"
                 />
-            <p className="p-16-semibold text-dark-400">{ passenger.firstName} { passenger.lastName}'s Request</p>
+            <p className="p-16-semibold text-dark-400">{ passenger.firstName} { passenger.lastName}`s Request</p>
           </div>
           <RequestGoogleMaps lat={lat} lng={lng} />
         </AlertDialogHeader>

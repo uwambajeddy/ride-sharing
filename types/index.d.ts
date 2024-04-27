@@ -21,7 +21,6 @@ declare type UpdateUserParams = {
 
 
 declare type AddTripParams = {
-  sits: number;
   driverId: string;
   startPoint: string;
   endPoint: string;
@@ -33,41 +32,6 @@ declare type UpdateTripParams = {
   startPoint?: string;
   endPoint?: string;
   path:string
-};
-
-declare type UpdateImageParams = {
-  image: {
-    _id: string;
-    title: string;
-    publicId: string;
-    transformationType: string;
-    width: number;
-    height: number;
-    config: any;
-    secureURL: string;
-    transformationURL: string;
-    aspectRatio: string | undefined;
-    prompt: string | undefined;
-    color: string | undefined;
-  };
-  userId: string;
-  path: string;
-};
-
-declare type trips = {
-  restore?: boolean;
-  fillBackground?: boolean;
-  remove?: {
-    prompt: string;
-    removeShadow?: boolean;
-    multiple?: boolean;
-  };
-  recolor?: {
-    prompt?: string;
-    to: string;
-    multiple?: boolean;
-  };
-  removeBackground?: boolean;
 };
 
 

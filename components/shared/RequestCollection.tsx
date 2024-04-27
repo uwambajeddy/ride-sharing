@@ -11,7 +11,6 @@ export const RequestCollection = ({
   trips: TripDocument[];
   userId?: string;
   }) => {
-  console.log(trips)
 
   return (
     <>
@@ -32,7 +31,7 @@ export const RequestCollection = ({
   );
 };
 
-const Card: React.FC<TripCardProps> = ({ trip, userId }) => {
+const Card: React.FC<any> = ({ trip, userId }) => {
   const [startAddress, setStartAddress] = useState('');
   const [endAddress, setEndAddress] = useState('');
 

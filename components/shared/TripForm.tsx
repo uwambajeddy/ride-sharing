@@ -15,7 +15,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { GoogleMapModal } from "./GoogleMapModal";
 import { TripFormProps } from "@/types";
-import { addTrip, updateTrip } from "@/lib/actions/trip.actions";
+import { addTrip } from "@/lib/actions/trip.actions";
 
 type Coordinates = {
   latitude: number;
@@ -85,22 +85,6 @@ const TripForm = ({
           if (newTrip) {
             form.reset();
             router.push(`/trips`);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      }
-
-      if (action === "Update" && data?._id) {
-        try {
-          const updatedImage = await updateTrip({
-            ...tripData,
-            tripId: data._id,
-            path: `/trips`,
-          });
-
-          if (updatedImage) {
-            router.push(`/trips/`);
           }
         } catch (error) {
           console.log(error);

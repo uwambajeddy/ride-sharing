@@ -19,10 +19,18 @@ export function Toaster({user}: any) {
 
   useEffect(() => {
     if (user) {
-    
+    console.log(user)
       socket.emit("sendUserDetails", { user })
     }
-
+    
+    socket.on("userConnected", () => { 
+      toast({
+        title: `Connected`,
+        description: `Real-time tracking enabled`,
+        duration: 5000,
+        className: 'success-toast' 
+      })
+    })
   }, []);
 
   socket.on("tripStatus", ({ trip, status }) => {
