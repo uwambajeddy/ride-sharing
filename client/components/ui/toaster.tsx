@@ -19,7 +19,6 @@ export function Toaster({user}: any) {
 
   useEffect(() => {
     if (user) {
-    console.log(user)
       socket.emit("sendUserDetails", { user })
     }
     
