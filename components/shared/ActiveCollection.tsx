@@ -6,7 +6,7 @@ import { GoogleMap, Marker, DirectionsService, DirectionsRenderer, useLoadScript
 
 import { Button } from "../ui/button";
 
-import { useEffect, useState } from "react";
+import { Key, SetStateAction, Key, useEffect, useState } from "react";
 import {  tripAction } from "@/lib/actions/trip.actions";
 import { TripCancellation } from "./TripCancellation";
 import Image from "next/image";
@@ -14,12 +14,10 @@ import { socket } from "@/lib/utils";
 
 export const ActiveCollection = ({
   trips,
-  userId, 
-  user
+  userId
 }: {
   trips: TripDocument[];
     userId?: string;
-  user: any
 }) => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY ?? ''
@@ -60,7 +58,7 @@ const Card: React.FC<any> = ({ trip, userId, isLoaded }) => {
             lng: longitude,
           });
          
-          socket.emit("startTrip", { trip, coordinates: { lat:latitude, lng: longitude }, passengers: trip.tripPassengers.filter(req=> req.status == "approved")});
+          socket.emit("startTrip", { trip, coordinates: { lat:latitude, lng: longitude }, passengers: trip.tripPassengers.filter((req: { status: string; })=> req.status == "approved")});
         });
       }
     }, 5000); 
@@ -146,7 +144,7 @@ if(driverLocation) fetchAddress();
             />
 
           {/* Markers for pickup points */}
-          {trip.tripPassengers.filter(req=> req.status == "approved").map((request, index) => 
+          {trip.tripPassengers.filter((req: { status: string; })=> req.status == "approved").map((request: SetStateAction<null>, index: Key | null | undefined) => 
             <Marker key={index} position={{lat:Number(`${request.pickupPoint.split(", ")[0]}`),lng:Number(`${request.pickupPoint.split(", ")[1]}`)}}  icon={{
               url: "https://res.cloudinary.com/dvibmdi1y/image/upload/v1714109675/passenger_r2iqwe.png",
               scaledSize: new window.google.maps.Size(40, 40)
@@ -176,7 +174,7 @@ if(driverLocation) fetchAddress();
             options={{
               destination:`${trip.endPoint.split(", ")[0]},${trip.endPoint.split(", ")[1]}`,
               origin:  driverLocation,
-              waypoints: trip.tripPassengers.filter(req=> req.status == "approved").map(request => ({ location: {lat:Number(`${request.pickupPoint.split(", ")[0]}`),lng:Number(`${request.pickupPoint.split(", ")[1]}`)} })),
+              waypoints: trip.tripPassengers.filter((req: { status: string; })=> req.status == "approved").map((request: { pickupPoint: string; }) => ({ location: {lat:Number(`${request.pickupPoint.split(", ")[0]}`),lng:Number(`${request.pickupPoint.split(", ")[1]}`)} })),
               travelMode: google.maps.TravelMode.DRIVING,
               provideRouteAlternatives: true,
             }}
@@ -245,7 +243,7 @@ if(driverLocation) fetchAddress();
         });  
         socket.emit("tripStatus", { 
           trip, 
-          passengers: trip.tripPassengers.filter(req => req.status == "approved"), 
+          passengers: trip.tripPassengers.filter((req: { status: string; }) => req.status == "approved"), 
           status:"completed"
         }); 
         router.push("/trips")
@@ -267,11 +265,11 @@ if(driverLocation) fetchAddress();
       <div className="text-gray-600">{endAddress}</div>
     </div>
 
-    {trip.tripPassengers.filter(req=> req.status == "approved").length > 0 && <div className="mb-4">
+    {trip.tripPassengers.filter((req: { status: string; })=> req.status == "approved").length > 0 && <div className="mb-4">
           <div className="text-sm font-semibold mb-1">Booked:</div>
           <div className="flex">
 
-          {trip.tripPassengers.filter(req=> req.status == "approved").map(request => {
+          {trip.tripPassengers.filter((req: { status: string; })=> req.status == "approved").map((request: { passengerId: { photo: string | undefined; }; _id: Key | null | undefined; }) => {
               return (
                 <img
                   src={

@@ -5,11 +5,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { socket } from "@/lib/utils";
 
-export const ActiveDriverCollection = ({
-  user
-}: {
-  user: any
-  }) => {
+export const ActiveDriverCollection = () => {
   
     const [driverLocation, setDriverLocation] = useState(null);
     const [trips, setTrips] = useState([]);
