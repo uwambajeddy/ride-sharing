@@ -29,7 +29,7 @@ const ActiveTrips = async () => {
           trips={trips?.data}
           userId={user._id}
         />
-        <ActiveDriverCollection user={ user} />
+        <ActiveDriverCollection  />
       </section>
     </>
   )
