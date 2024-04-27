@@ -1,103 +1,133 @@
-# Ride-Sharing Web App
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://ride-sharing-virid.vercel.app">
+    <img src="[images/logo.png](https://github.com/uwambajeddy/ride-sharing/assets/59047760/ef4f44fc-fece-427a-8a94-235b8603f4aa)" alt="Logo" width="80" height="80">
+  </a>
 
-## Overview
+  <h3 align="center">Ride-Sharing Web App</h3>
+
+
+  <p align="center">
+    Navigate Life Ride with purposes
+    <br />
+
+  </p>
+</div>
+
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+[![Ride share Screen Shot][product-screenshot]]([https://example.com](https://ride-sharing-virid.vercel.app))
+![Opera Snapshot_2024-04-27_034729_localhost](https://github.com/uwambajeddy/ride-sharing/assets/59047760/75522c08-3fb6-4598-a527-3597e965eff4)
+
+
 The Ride-Sharing Web App is a platform that connects drivers and passengers for convenient and efficient transportation. It allows users to request rides and track their drivers in real-time.
+
+### Built With
+
+List of frameworks/libraries and languages used to bootstrap this project:
+
+* [![Next][Next.js]][Next-url]
+* [![React][React.js]][React-url]
+* [![Google][Google-maps]][Google-maps]
+* [![Socket][Socket-io]][Socket-io]
+* [![Socket][Socket-io]][Mongo-db]
+* [![Node][Socket-io]][Node]
+* [![Typescript][Socket-io]][Typescript]
+* [![Express][Socket-io]][Express]
+
+
+
+### Installation
+
+_Below is an example of how you can instruct your audience on installing and setting up your app._
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/uwambajeddy/ride-sharing.git
+   ```
+2. Install NPM packages for the client-side and server-side
+   ```sh
+   cd client
+   npm install
+   cd ..
+   cd server
+   npm install
+   ```
+3. Place the required environment variables in `.env.local` file by following instructions in `.env.example` file
+   
 
 ## Features
 - User Registration: Users can create accounts and provide their personal information.
 - Ride Request: Passengers can request rides by specifying their pickup and drop-off locations.
-- Driver Matching: The app matches passengers with available drivers based on proximity and availability.
 - Real-Time Tracking: Passengers can track their assigned driver's location in real-time.
-- Payment Integration: The app supports secure payment processing for completed rides.
-- Rating and Feedback: Passengers can rate their drivers and provide feedback on their experience.
+- User authentication and authorization
+- Trip creation and management
+- Interactive maps for visualizing trip routes and passenger pickups
+- Seamless integration with third-party APIs for geolocation and mapping services
 
-## Technologies Used
-- Front-end: HTML, CSS, JavaScript
-- Back-end: Node.js, Express.js
-- Database: MongoDB
-- Mapping and Geolocation: Google Maps API
-
-## Installation
-1. Clone the repository: `git clone https://github.com/your-username/ride-sharing.git`
-2. Install dependencies: `npm install`
-3. Set up the database: [instructions here]
-4. Configure API keys: [instructions here]
-5. Start the server: `npm start`
 
 ## Usage
-1. Open the web app in your browser.
-2. Sign up or log in to your account.
-3. Request a ride by entering your pickup and drop-off locations.
-4. Track your assigned driver's location in real-time.
-5. Complete the ride and make a payment.
-6. Provide a rating and feedback for your driver.
 
-## Contributing
-Contributions are welcome! If you'd like to contribute to the project, please follow these steps:
-1. Fork the repository.
-2. Create a new branch: `git checkout -b feature/your-feature-name`
-3. Make your changes and commit them: `git commit -m 'Add your feature'`
-4. Push to the branch: `git push origin feature/your-feature-name`
-5. Submit a pull request.
+Here are the screenshots to provide you with a visual understanding of how the system operates, enhancing your user experience:
+
+### Begin by logging into the system
+![1](https://github.com/uwambajeddy/ride-sharing/assets/59047760/a1a9e445-169c-4b76-a7db-a84adde9ee91)
+![2](https://github.com/uwambajeddy/ride-sharing/assets/59047760/cc1e2447-637c-4c64-ba90-685a818a5362)
+
+## _Driver_
+### Let's kick off by initiating the driver activities through scheduling a trip.
+
+### Navigate to `create new trip` page
+![3](https://github.com/uwambajeddy/ride-sharing/assets/59047760/f82dccf9-118b-412b-978f-2bfca3553ac4)
+
+> By clicking on one of the inputs shown in the picture, the Map modal will display and you will have to mark the `Origin` and the `Destination` locations then click the `select location` button, submit the form and like that your trip is schedule.
+![4](https://github.com/uwambajeddy/ride-sharing/assets/59047760/1bdfd1a7-3db7-4248-8a3d-ec7668458f65)
+![5](https://github.com/uwambajeddy/ride-sharing/assets/59047760/cdea78b8-dc54-4222-92b2-85290410c8d9)
+![6](https://github.com/uwambajeddy/ride-sharing/assets/59047760/0f31de1d-9048-4b18-ac77-8ed607e36715)
+
+## _Passenger_
+### Next step is to request a trip that have been created
+
+> By logging into the system with a different account you will be able to request a ride
+![7](https://github.com/uwambajeddy/ride-sharing/assets/59047760/6e1db89e-b062-4a60-9f30-c9715ed9ecec)
+
+> When you request a ride you'll be asked to provide you pick up location and after request a ride your request status will be pending and you'll have to wait for the driver to `approve` or `reject` it.
+![8](https://github.com/uwambajeddy/ride-sharing/assets/59047760/393ad71a-d00b-445c-8157-a53bce2c767b)
+![9](https://github.com/uwambajeddy/ride-sharing/assets/59047760/33b29ff7-7014-476f-8499-cb6170fd9a53)
+
+
+## _Driver_
+_the window on the left is for driver account and the one on the right is for the passenger_
+
+> As a driver, you have the option to either `approve` or `reject` requests before commencing the trip. Clicking on the passenger request photo will prompt a modal to appear, displaying the passenger's pickup location. You'll utilize this information to take appropriate action.
+![10](https://github.com/uwambajeddy/ride-sharing/assets/59047760/4667d07e-d988-4136-b81f-fca892688890)
+![11](https://github.com/uwambajeddy/ride-sharing/assets/59047760/c45f866b-df5b-4d70-97fe-2dc060e8d789)
+![12](https://github.com/uwambajeddy/ride-sharing/assets/59047760/cde56afc-2d48-4ffc-a9b0-e7bc13e6359a)
+
+### After the driver starts the trip both the passenger and the driver can navigate to the `active trip` page to watch the realtime driver location
+![Screenshot (1025)](https://github.com/uwambajeddy/ride-sharing/assets/59047760/111a9dff-a0d5-427b-8df6-655a5ebf3e9c)
+
+![13](https://github.com/uwambajeddy/ride-sharing/assets/59047760/5fe86183-fa89-4c77-904a-dad0a9b53ae7)
+
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
 
-Ride Share App
-Ride Share is a web application that facilitates ride-sharing services, allowing users to easily find and share rides with others.
 
-Table of Contents
-Introduction
-Features
-Technologies Used
-Setup
-Usage
-Contributing
-License
-Introduction
-Ride Share aims to provide an efficient platform for users to offer and request rides, helping to reduce transportation costs, promote sustainability, and foster community connections. The application allows users to create and manage their trips, view trip details, and interact with other users in real-time.
+[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
+[Next-url]: https://nextjs.org/
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[Google-maps]: https://cdn.icon-icons.com/icons2/2699/PNG/512/google_maps_tile_logo_icon_169082.png
+[Socket-io]: https://www.vectorlogo.zone/logos/socketio/socketio-ar21.png
+[Mongo-db]: https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white
+[Express]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge
+[Typescript]: https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white
+[Node]: [https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 
-Features
-User authentication and authorization
-Trip creation and management
-Real-time tracking of trip status and location
-Interactive maps for visualizing trip routes and passenger pickups
-Messaging and communication between drivers and passengers
-Seamless integration with third-party APIs for geolocation and mapping services
-Technologies Used
-Frontend: React.js, Next.js, TypeScript, Tailwind CSS, Socket.IO
-Backend: Node.js, Express.js, MongoDB, Socket.IO
-Authentication: Clerk (Clerk's User Authentication Service)
-Mapping and Geolocation: Google Maps API
-Deployment: Heroku (Backend), Vercel (Frontend)
-Setup
-Clone the repository:
-bash
-Copy code
-git clone https://github.com/your-username/ride-share-app.git
-Navigate to the project directory:
-bash
-Copy code
-cd ride-share-app
-Install dependencies:
-bash
-Copy code
-npm install
-Set up environment variables:Create a .env file in the root directory and add the necessary environment variables. Refer to the .env.example file for required variables.
-Start the development server:
-bash
-Copy code
-npm run dev
-Open your browser and navigate to http://localhost:3000 to view the application.
-Usage
-Sign up or log in to the application using your credentials.
-Create a new trip or search for available trips.
-View trip details, including start and end locations, passenger information, and trip status.
-Offer rides or request rides from other users.
-Track the real-time location of drivers and passengers using interactive maps.
-Communicate with other users through messaging features.
-Contributing
-Contributions are welcome! If you have any suggestions, bug reports, or feature requests, please submit them via GitHub issues or create a pull request.
 
-License
-This project is licensed under the MIT License.
+
+
