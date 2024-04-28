@@ -102,7 +102,8 @@ _the window on the left is for driver account and the one on the right is for th
 ![11](https://github.com/uwambajeddy/ride-sharing/assets/59047760/c45f866b-df5b-4d70-97fe-2dc060e8d789)
 ![12](https://github.com/uwambajeddy/ride-sharing/assets/59047760/cde56afc-2d48-4ffc-a9b0-e7bc13e6359a)
 
-### After the driver starts the trip both the passenger and the driver can navigate to the `active trip` page to watch the realtime driver location
+### After the driver starts the trip both the passenger and the driver can navigate to the `active trip` page to watch the realtime driver location and once the trip is done the driver can mark it as completed
+### ⚠️ N.B _when you start driver the starting point will always be your current location, not the one you set while scheduling the trip_
 ![Screenshot (1025)](https://github.com/uwambajeddy/ride-sharing/assets/59047760/111a9dff-a0d5-427b-8df6-655a5ebf3e9c)
 
 ![13](https://github.com/uwambajeddy/ride-sharing/assets/59047760/5fe86183-fa89-4c77-904a-dad0a9b53ae7)
