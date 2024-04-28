@@ -32,6 +32,7 @@ List of frameworks/libraries and languages used to bootstrap this project:
 * [![Mongo-db][Mongo-db]][Mongo-db]
 * [![Node][Node]][Node]
 * [![Typescript][Typescript]][Typescript]
+* [![Tail-wind][Tail-wind]][Tail-wind]
 
 
 
@@ -122,6 +123,8 @@ This project is licensed under the [MIT License](LICENSE).
 [Express]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge
 [Typescript]: https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white
 [Node]: https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white
+[Tail-wind]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?
+
 
 
 
