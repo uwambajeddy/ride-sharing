@@ -32,7 +32,6 @@ List of frameworks/libraries and languages used to bootstrap this project:
 * [![Mongo-db][Mongo-db]][Mongo-db]
 * [![Node][Node]][Node]
 * [![Typescript][Typescript]][Typescript]
-* [![Express][Express]][Express]
 
 
 
